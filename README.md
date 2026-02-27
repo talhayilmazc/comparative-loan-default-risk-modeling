@@ -72,3 +72,11 @@ Create and activate a virtual environment, then install dependencies:
 
 pip install -r requirements.txt
 
+
+## Data Access
+
+The raw Lending Club dataset is not included due to size and licensing constraints.  
+It can be accessed via Kaggle:
+
+https://www.kaggle.com/datasets/wordsforthewise/lending-club
+
