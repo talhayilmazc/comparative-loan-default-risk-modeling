@@ -1,0 +1,18 @@
+# Python / venv
+venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (do NOT commit datasets)
+data/raw/
+data/processed/
+*.csv
+*.csv.gz
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
