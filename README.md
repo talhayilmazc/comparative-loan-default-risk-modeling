@@ -1,82 +1,132 @@
-\# Comparative Loan Default Risk Modeling
+# Comparative Loan Default Risk Modeling  
+### Supervised Learning Benchmarking under Financial Risk Constraints
 
-\### Comparative Supervised Learning Study (Logistic Regression vs Random Forest vs XGBoost)
+---
 
+## 1. Objective
 
+This project presents a comparative supervised learning study for loan default prediction using structured financial data.  
 
-\## Objective
+The objective is not merely predictive accuracy, but disciplined modeling under realistic financial risk conditions, including:
 
-Build and evaluate supervised learning models for loan default prediction using structured financial features under realistic conditions (missing values, class imbalance, and leakage prevention).
+- Target leakage prevention
+- Class imbalance handling
+- Cross-validation benchmarking
+- Decision threshold optimization
 
+---
 
+## 2. Problem Context
 
-\## Dataset
+Loan default prediction is a core problem in credit risk modeling.  
 
-Lending Club dataset (sampled and cleaned subset used for modeling).
+In real-world financial systems, models must:
 
-> Note: Raw dataset files are not included in this repository.
+- Avoid information leakage from post-outcome variables  
+- Maintain stability across cross-validation folds  
+- Balance precision and recall depending on institutional risk tolerance  
 
+This study frames default prediction as a structured modeling and decision problem rather than a leaderboard-style experiment.
 
+---
 
-\## Methodology
+## 3. Data Preprocessing & Leakage Control
 
-\- Removed high-missing variables and high-cardinality identifiers
+Several post-outcome and recovery-related variables were removed to prevent target leakage, including:
 
-\- Prevented target leakage by dropping post-outcome variables (recoveries/payment/settlement-related fields)
+- Recovery amounts
+- Settlement-related features
+- Payment-related post-event fields
 
-\- Stratified train/test split
+Missing values were handled using:
 
-\- Preprocessing pipeline using `ColumnTransformer`:
+- Median imputation (numerical)
+- Most-frequent imputation (categorical)
 
-&nbsp; - Median imputation + scaling for numeric features
+Categorical variables were encoded via one-hot encoding using a `ColumnTransformer` pipeline.
 
-&nbsp; - Most-frequent imputation + one-hot encoding for categorical features
+---
 
-\- Benchmarked models:
+## 4. Modeling Approach
 
-&nbsp; - Logistic Regression (baseline)
+Three supervised learning models were benchmarked:
 
-&nbsp; - Random Forest (bagging ensemble)
+- Logistic Regression (interpretable linear baseline)
+- Random Forest (bagging ensemble)
+- XGBoost (gradient boosting ensemble)
 
-&nbsp; - XGBoost (boosting ensemble)
+Stratified train/test split was used to preserve class distribution.
 
-\- Evaluated using ROC-AUC and 5-fold cross-validation
+Evaluation metrics:
 
-\- Performed threshold optimization to analyze precision–recall trade-offs
+- ROC-AUC
+- 5-fold Cross-Validation ROC-AUC
+- Precision / Recall trade-off analysis
 
+Observed performance:
 
+- Logistic Regression: ~0.96 ROC-AUC
+- Random Forest: ~0.95 ROC-AUC
+- XGBoost: ~0.96 ROC-AUC
 
-\## Results (ROC-AUC)
+---
 
-\- Logistic Regression: ~0.957
+## 5. Threshold Optimization
 
-\- Random Forest: ~0.955
+Rather than using the default 0.5 probability threshold, multiple thresholds were evaluated to balance:
 
-\- XGBoost: ~0.960
+- Precision
+- Recall
+- F1-score
 
+This demonstrates how deployment decisions differ from pure model training metrics in financial institutions.
 
+---
 
-\## Notebook
+## 6. Model Interpretation
 
-\- `notebooks/01\_loan\_default\_analysis.ipynb`
+Coefficient analysis (Logistic Regression) and feature importance exploration provide insights into the drivers of loan default risk.
 
+Key predictive signals include:
 
+- Credit score related features
+- Debt-to-income metrics
+- Account history characteristics
 
-\## Reproducibility
+This reinforces financial plausibility and interpretability.
 
-Create and activate a virtual environment, then install dependencies:
+---
 
+## 7. Key Contributions
 
+- Structured comparative modeling framework
+- Explicit leakage prevention
+- Cross-validated benchmarking
+- Threshold-based deployment perspective
+- Financially grounded interpretation
+
+---
+
+## 8. Reproducibility
+
+Install dependencies:
 
 ```bash
-
 pip install -r requirements.txt
 
+Run notebook:
 
-## Data Access
+python -m jupyter lab
+9. Academic Framing
 
-The raw Lending Club dataset is not included due to size and licensing constraints.  
-It can be accessed via Kaggle:
+This project emphasizes:
 
-https://www.kaggle.com/datasets/wordsforthewise/lending-club
+Applied statistical learning in financial risk modeling
 
+Robust model comparison under controlled evaluation
+
+Deployment-aware threshold tuning
+
+Interpretability considerations in credit risk systems
+
+It is structured as a research-aware applied modeling study rather than a performance-only experiment.
